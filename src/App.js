@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Button, FormControl, InputLabel, Input } from "@material-ui/core";
+import Message from "./Message";
 
 import "./App.css";
 
@@ -22,18 +24,33 @@ function App() {
     setstate("");
   };
   return (
-    <>
+    <div className="App">
       <form>
-        <input value={state} onChange={inputHandler}></input>
-        <button type="submit" onClick={sendMessage}>
-          Send Message
-        </button>
+        <FormControl>
+          <InputLabel htmlFor="my-input">Enter your message</InputLabel>
+          <Input
+            id="my-input"
+            aria-describedby="my-helper-text"
+            value={state}
+            onChange={inputHandler}
+          />
+          <Button
+            // disable when input field is empty
+            disabled={!state}
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={sendMessage}
+          >
+            Send Message
+          </Button>
+        </FormControl>
       </form>
 
       {messages.map((item) => (
-        <p>{item}</p>
+        <Message text={item} />
       ))}
-    </>
+    </div>
   );
 }
 
