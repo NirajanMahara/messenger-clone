@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, FormControl, InputLabel, Input } from "@material-ui/core";
 import Message from "./Message";
 
@@ -7,9 +7,12 @@ import "./App.css";
 function App() {
   const [state, setstate] = useState("");
   const [messages, setMessages] = useState(["hey"]);
+  const [username, setUserName] = useState("");
 
-  console.log(state);
-  console.log(messages);
+  useEffect(() => {
+    const name = prompt("Please enter your name");
+    setUserName(name);
+  }, []);
 
   const inputHandler = (e) => {
     setstate(e.target.value);
@@ -46,6 +49,7 @@ function App() {
           </Button>
         </FormControl>
       </form>
+      <p>Welcome {username}</p>
 
       {messages.map((item) => (
         <Message text={item} />
