@@ -34,13 +34,19 @@ function App() {
       }
     }
   }, []);
+  const onKeyPress = (e) => {
+    if (e.which === 13) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
   const inputHandler = (e) => {
     setstate(e.target.value);
   };
 
   const sendMessage = (e) => {
-    e.preventDefault();
+    /* e.preventDefault(); */
     //copy all the existing messages and new one.
     setMessages([...messages, { username: username, text: state }]);
 
@@ -58,6 +64,7 @@ function App() {
         state={state}
         inputHandler={inputHandler}
         sendMessage={sendMessage}
+        onKeyPress={onKeyPress}
       />
     </div>
   );

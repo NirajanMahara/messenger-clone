@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineUpload } from "react-icons/ai";
 
-function Form({ state, sendMessage, inputHandler }) {
+function Form({ state, sendMessage, inputHandler, onKeyPress }) {
   return (
     <div className="row">
       <div className="col-12 fixed-bottom">
@@ -16,6 +16,7 @@ function Form({ state, sendMessage, inputHandler }) {
                 id="message"
                 name="message"
                 value={state}
+                onKeyPress={onKeyPress}
                 placeholder="Please enter your message"
                 onChange={inputHandler}
                 className="form-control "
