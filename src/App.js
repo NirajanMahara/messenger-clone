@@ -56,10 +56,11 @@ function App() {
 
     //reset input field after clicking button
     setstate("");
+    window.scrollTo(0, document.body.scrollHeight);
   };
   return (
     <div className="App center-items">
-      <p>Welcome {username}</p>
+      <h1 className="welcome-text">Welcome {username}</h1>
 
       {messages.map((item, i) => (
         <Message key={i} username={username} text={item} />
