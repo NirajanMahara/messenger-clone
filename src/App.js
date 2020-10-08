@@ -18,6 +18,10 @@ function App() {
 
   useEffect(() => {
     const name = prompt("Please enter your name");
+    if (name === null) {
+      alert("You are not allowed to see without login");
+      window.location.reload();
+    }
     const styledName = name.charAt(0).toUpperCase() + name.slice(1);
     console.log(styledName);
 

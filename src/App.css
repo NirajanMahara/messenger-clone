@@ -33,16 +33,26 @@
 .message-user-guest {
   text-align: left;
 }
-.message-text {
+.message-text-guest {
   background-color: teal;
   color: white;
   padding: 10px;
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 2px 10px 10px 2px;
 }
-.message-user {
+.message-text-own {
+  background-color: rgb(224, 68, 6);
+  color: white;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 10px 2px 2px 10px;
+}
+.message-username-guest {
   color: rgb(41, 68, 119);
   border-radius: 10px 0 0 10px;
-  padding: 10px 20px 0 0;
+  padding: 10px 20px 0 2px;
   margin-bottom: -1px;
+}
+.message-username-own {
+  display: none;
 }

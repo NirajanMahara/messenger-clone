@@ -8,8 +8,8 @@ export default function Message({ text, username }) {
   //add style according to user like className={`message ${isUser && "messagge_user"}`}
   return (
     <div className={`message-user-${styleForName}`}>
-      <p className="message-user"> {text.username}</p>
-      <p className="message-text">{text.text}</p>
+      <p className={`message-username-${styleForName}`}> {text.username}</p>
+      <p className={`message-text-${styleForName}`}>{text.text}</p>
     </div>
   );
 }
