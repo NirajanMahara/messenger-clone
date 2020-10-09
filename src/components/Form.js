@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineUpload } from "react-icons/ai";
 
 function Form({ state, sendMessage, inputHandler, onKeyPress }) {
   return (
@@ -7,10 +6,7 @@ function Form({ state, sendMessage, inputHandler, onKeyPress }) {
       <div className="col-12 fixed-bottom">
         <form className="form-send-message center-items">
           <div className="row">
-            <div className="col-1 pr-1 ">
-              <AiOutlineUpload size={32} />
-            </div>
-            <div className="col-9 form-input">
+            <div className="col-10 form-input">
               <input
                 type="text"
                 id="message"

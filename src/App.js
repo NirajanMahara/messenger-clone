@@ -2,19 +2,29 @@ import React, { useState, useEffect } from "react";
 
 import Message from "./Message";
 
+import firebase from "./firebase";
+
 import Form from "./components/Form";
 
 import "./App.css";
 
 function App() {
   const [state, setstate] = useState("");
-  const [messages, setMessages] = useState([
-    { username: "Ufuk", text: "how are you?" },
-    { username: "Elif", text: "I am mad at you!" },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [username, setUserName] = useState("");
 
   const uniqueName = ["Ufuk", "Elif"];
+
+  useEffect(() => {
+    const downloadMessage = firebase.database().ref("Messages");
+    downloadMessage.on("value", (snapshot) => {
+      const allMessages = Object.values(snapshot.val());
+
+      allMessages.map((item) =>
+        setMessages((prevState) => [...prevState, item])
+      );
+    });
+  }, []);
 
   useEffect(() => {
     const name = prompt("Please enter your name");
@@ -50,8 +60,9 @@ function App() {
   };
 
   const sendMessage = (e) => {
-    /* e.preventDefault(); */
-    //copy all the existing messages and new one.
+    const uploadMessage = firebase.database().ref("Messages");
+    const messageTo = { username: username, text: state };
+    uploadMessage.push(messageTo);
     setMessages([...messages, { username: username, text: state }]);
 
     //reset input field after clicking button
