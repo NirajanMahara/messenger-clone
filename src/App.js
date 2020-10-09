@@ -20,11 +20,13 @@ function App() {
     // Retrieve records data in the database
     const downloadMessage = firebase.database().ref("Messages");
     downloadMessage.on("value", (snapshot) => {
-      const allMessages = Object.values(snapshot.val());
+      const allMessages = snapshot.val();
+      const messageList = [];
+      for (let id in allMessages) {
+        messageList.push({ id, ...allMessages[id] });
+      }
 
-      allMessages.map((item) =>
-        setMessages((prevState) => [...prevState, item])
-      );
+      setMessages(messageList);
     });
   }, []);
 
@@ -68,6 +70,11 @@ function App() {
     setstate(e.target.value);
   };
 
+  const deleteMessageHandler = (id) => {
+    const deleteMessage = firebase.database().ref("Messages").child(id);
+    deleteMessage.remove();
+  };
+
   const sendMessage = (e) => {
     // add all messages written by all users to database
     const uploadMessage = firebase.database().ref("Messages");
@@ -75,7 +82,7 @@ function App() {
     uploadMessage.push(messageTo);
 
     //add all messages written by all users to text field
-    setMessages([...messages, { username: username, text: state }]);
+    /* setMessages([...messages, { username: username, text: state }]); */
 
     //reset input field after clicking button
     setstate("");
@@ -83,12 +90,18 @@ function App() {
     //add auto-scroll so the page focus automatically focuses on recent posts
     window.scrollTo(0, document.body.scrollHeight);
   };
+
   return (
     <div className="App center-items">
       <h1 className="welcome-text">Welcome {username}</h1>
 
-      {messages.map((item, i) => (
-        <Message key={i} username={username} text={item} />
+      {messages.map((item) => (
+        <Message
+          key={item.id}
+          username={username}
+          text={item}
+          deleteMessageHandler={deleteMessageHandler}
+        />
       ))}
       <Form
         state={state}

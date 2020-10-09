@@ -6,7 +6,7 @@ function Form({ state, sendMessage, inputHandler, onKeyPress }) {
       <div className="col-12 fixed-bottom">
         <form className="form-send-message center-items">
           <div className="row">
-            <div className="col-10 form-input">
+            <div className="col-9 form-input">
               <input
                 type="text"
                 id="message"
