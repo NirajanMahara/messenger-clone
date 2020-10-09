@@ -13,9 +13,11 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [username, setUserName] = useState("");
 
-  const uniqueName = ["Ufuk", "Elif"];
+  // the name must be unique
+  const uniqueName = [];
 
   useEffect(() => {
+    // Retrieve records data in the database
     const downloadMessage = firebase.database().ref("Messages");
     downloadMessage.on("value", (snapshot) => {
       const allMessages = Object.values(snapshot.val());
@@ -28,26 +30,32 @@ function App() {
 
   useEffect(() => {
     const name = prompt("Please enter your name");
+
+    //if the user hits cancel
     if (name === null) {
-      alert("You are not allowed to see without login");
+      alert("You are not allowed to view without login");
       window.location.reload();
     }
+    // get the name and convert it to stylized format
     const styledName = name.charAt(0).toUpperCase() + name.slice(1);
-    console.log(styledName);
 
+    //check whether the user has entered a name
     if (styledName.length < 1) {
       alert("Name can not be blank");
       window.location.reload();
     } else {
       if (uniqueName.includes(styledName)) {
-        alert("Name have to unique. Please choose another name");
+        alert("The name must be unique. Please choose another name");
         window.location.reload();
       } else {
+        //If the name is unique, add it to the name list
         setUserName(styledName);
         uniqueName.push(styledName);
       }
     }
   }, []);
+
+  //message should be sent if user presses 'enter' key
   const onKeyPress = (e) => {
     if (e.which === 13) {
       e.preventDefault();
@@ -55,18 +63,24 @@ function App() {
     }
   };
 
+  //capture text typed by the user
   const inputHandler = (e) => {
     setstate(e.target.value);
   };
 
   const sendMessage = (e) => {
+    // add all messages written by all users to database
     const uploadMessage = firebase.database().ref("Messages");
     const messageTo = { username: username, text: state };
     uploadMessage.push(messageTo);
+
+    //add all messages written by all users to text field
     setMessages([...messages, { username: username, text: state }]);
 
     //reset input field after clicking button
     setstate("");
+
+    //add auto-scroll so the page focus automatically focuses on recent posts
     window.scrollTo(0, document.body.scrollHeight);
   };
   return (
