@@ -27,6 +27,8 @@ function App() {
       }
 
       setMessages(messageList);
+      //add auto-scroll so the page focus automatically focuses on recent posts
+      window.scrollTo(0, document.body.scrollHeight);
     });
   }, []);
 
@@ -78,7 +80,11 @@ function App() {
   const sendMessage = (e) => {
     // add all messages written by all users to database
     const uploadMessage = firebase.database().ref("Messages");
-    const messageTo = { username: username, text: state };
+
+    const messageTo = {
+      username: username,
+      text: state,
+    };
     uploadMessage.push(messageTo);
 
     //add all messages written by all users to text field
@@ -86,9 +92,6 @@ function App() {
 
     //reset input field after clicking button
     setstate("");
-
-    //add auto-scroll so the page focus automatically focuses on recent posts
-    window.scrollTo(0, document.body.scrollHeight);
   };
 
   return (
